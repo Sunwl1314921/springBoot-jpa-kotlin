@@ -3,7 +3,6 @@ package com.mytest.kotlin.service.impl
 import com.mytest.kotlin.service.UserService
 import com.mytest.kotlin.bean.User
 import com.mytest.kotlin.jpa.UserRepository
-import com.mytest.kotlin.service.SendService
 import org.hibernate.SQLQuery
 import org.hibernate.transform.Transformers
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,8 +14,8 @@ import javax.persistence.PersistenceContext
 class UserServiceImpl : UserService {
     @Autowired
     lateinit var userRepository: UserRepository
-    @Autowired
-    lateinit var sendService: SendService
+    //    @Autowired
+//    lateinit var sendService: SendService
     @PersistenceContext
     private val em: EntityManager? = null
 
@@ -28,7 +27,7 @@ class UserServiceImpl : UserService {
      * fun getUserListByName(): MutableList<Any?>?
      */
     fun getUserListByName(name: String): MutableList<User> {
-        var sql = "select u from "+" User "+" u where u.name = :name order by u.id desc"
+        var sql = "select u from " + " User " + " u where u.name = :name order by u.id desc"
         val query = getEm().createQuery(sql)
         query.setParameter("name", name)
         return query?.resultList as MutableList<User>
@@ -51,7 +50,7 @@ class UserServiceImpl : UserService {
 
     override fun getListByName(name: String): MutableList<User> = userRepository.getUserList(name)
 
-    fun sendMsg(msg: String) {
-        sendService.sendMsg(msg)
-    }
+//    fun sendMsg(msg: String) {
+//        sendService.sendMsg(msg)
+//    }
 }

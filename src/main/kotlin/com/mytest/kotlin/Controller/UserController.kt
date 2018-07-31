@@ -29,7 +29,6 @@ class UserController {
     fun addAll(): Int {
         val list = arrayListOf(User(1, "张三"), User(2, "李四"), User(3, "王五"), User(5, "赵六"))
         for (user in list) {
-            user.id = 0
             userServiceImpl.addUser(user)
         }
         return list.size
@@ -47,8 +46,8 @@ class UserController {
     @GetMapping("get1/{name}")
     fun getList(@PathVariable name: String) = userServiceImpl.getAlluserListByName(name)
 
-    @GetMapping("send/{msg}")
-    fun sendMsg(@PathVariable msg:String)=userServiceImpl.sendMsg(msg)
+//    @GetMapping("send/{msg}")
+//    fun sendMsg(@PathVariable msg:String)=userServiceImpl.sendMsg(msg)
 }
 
 fun main(args: Array<String>) {
