@@ -1,9 +1,14 @@
 package com.mytest.kotlin.Controller
 
 import com.mytest.kotlin.bean.User
+import com.mytest.kotlin.bean.UserInfo
+import com.mytest.kotlin.service.UserInfoService
+import com.mytest.kotlin.service.UserService
+import com.mytest.kotlin.service.impl.UserInfoServiceImpl
 import com.mytest.kotlin.service.impl.UserServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.redis.core.RedisTemplate
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -14,16 +19,49 @@ class UserController {
     @Autowired
     lateinit var userServiceImpl: UserServiceImpl
     @Autowired
+    lateinit var userInfoServiceImpl: UserInfoServiceImpl
+
+    @Autowired
     lateinit var redisTemplate: RedisTemplate<String, String>
 
     @GetMapping("/")
     fun get(): String = redisTemplate.opsForValue().get("sher")
 
+    @Transactional
+    @GetMapping("add2")
+    fun addUser2(): UserInfo? {
+
+        val user = UserInfo(name = "sher3333",age = 12)
+        val u =  userInfoServiceImpl.addUserInfo(user)
+
+        val a = 2/0;
+
+        val user2 = User(name = "sher3333")
+        val us =userServiceImpl.addUser(user2)
+
+        return u
+    }
+
     @GetMapping("add")
     fun addUser(): User? {
-        var user = User(name = "sher")
-        return userServiceImpl.addUser(user)
+        val user = User(name = "sher2222")
+
+        val us =userServiceImpl.addUser(user)
+
+        val a = 2/0;
+
+        val user2 = UserInfo(name = "sher2222",age = 12)
+        userInfoServiceImpl.addUserInfo(user2)
+        return us
+
+
     }
+
+
+
+
+
+
 
     @GetMapping("/all")
     fun addAll(): Int {
@@ -45,7 +83,7 @@ class UserController {
 
     @GetMapping("get1/{name}")
     fun getList(@PathVariable name: String) = userServiceImpl.getAlluserListByName(name)
-
+//
 //    @GetMapping("send/{msg}")
 //    fun sendMsg(@PathVariable msg:String)=userServiceImpl.sendMsg(msg)
 }
